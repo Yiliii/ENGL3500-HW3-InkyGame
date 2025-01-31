@@ -1,133 +1,242 @@
-// Once upon a time...
+VAR suspicion_level = 0
+VAR first_night_hesitated = false
+VAR deception_success = false
+VAR attack_target = ""
+VAR vote_target = ""
 
-//  * There were two choices.
-//  * There were four lines of content.
-
-// - They lived happily ever after.
-//     -> END
-
-//mafia game mini version: 4 players, one sheriff, two civilians, and one mafia.
-//role assignment: 1 sheriff (Kally) 2 civilian (Sam) 3 mafia (Player; Alex) 4 civilian (Casey)
-Mayor: Welcome, everyone, to the game of Mafia—a battle of deception, deduction, and survival...
+Mayor: Welcome, everyone, to the game of Mafia —— a battle of deception, deduction, and survival...
 In this town, we have four players: one Sheriff, two Civilians, and one Mafia hiding among us...
 Each night, the Mafia will strike in secret, while the Sheriff investigates and the Civilians try to stay alive. By day, we vote and debate to uncover the truth.
-(You opened the card...you are the bad, evil mafia in this game...)
-// First, let the denstiny decides your. Please draw your role.
-// When it is your turn to draw the card, only two cards are left:
-//     * Choose the left card -> mafia
-//     * Choose the right card -> sheriff
-  // Maybe add options for civillian??
+
+(You opened the card...you are the bad, evil Mafia in this game...)
+
 Now, the sun sets, and the town falls into silence... Close your eyes. Night has begun.
 
-    * Close eyes -> game_start
-    * [Asks about the rules]-> game_rules
-    
+* [Close eyes] -> game_start
+* [Asks about the rules] -> game_rules
+
 === game_rules ===
+
 "Wait! I am still confused!"
 
-Mayor: More on the game rules blahblahblah
-    * ["Okay it all makes sense now"] -> game_start
-    * [Ummm, I might need a sec to digest this...] -> newbie
+Mayor: "Each night, the Sheriff investigates a player’s identity, while the Mafia secretly chooses a target to eliminate. During the night phase, I will call on the Sheriff, who will open their eyes and point to a player they want to investigate. I will respond with a hand signal —— thumbs up means the person is a good civilian, while thumbs down means they are the Mafia. Then, I will ask the Mafia to open their eyes and silently point to their chosen target. Once they decide, they will close their eyes again...
+
+When morning comes, everyone opens their eyes, and I will announce whether someone has been eliminated. By day, the group discusses, debates, and votes to determine who they suspect is Mafia...
+
+The goal? Outsmart your opponents, survive, and uncover the truth before it’s too late!"
+
+* "Okay, it all makes sense now." -> game_start
+* [Ummm, I might need a sec to digest this...] -> newbie
 
 === newbie ===
-    Kally: "Hi, ummm...hi, are you good? You look confused?"
-    * ["Uh haha yeah sure, let's begin!"] -> game_start
-    * ["Well, I am actually not really getting this..."] -> Kally_friendly
+
+Kally: "Hey, you okay? You look a little lost."
+
+* "Uh haha, no yeah I am okay, let's just begin!" -> game_start
+* "Well, I am actually not really getting this...["] -> Kally_friendly
 
 === Kally_friendly ===
-    "It's my first time playing this game, so..."
-    Kally: "Hey, don't worry about it! I've been there! My name is Kally by the way!"
-    "I am Alex!"
-    Kally: "Really nice to meet you Alex! Do you have specific questions about the game rules? I am happy to help explain!"
-    * ["Umm...yes..."] -> annoyed_Casey
-    * ["Thank you Kally, but I am good!"] -> game_start
-    = annoyed_Casey
-    "I am a question about the nights, so when the ——"
-    Casey: "Come on guys...why can't we just start now?!! Like Alex —— your name is Alex right? —— you can learn while you play it, it's not a big deal."
-    Kally: "Casey!"
-    Casey: "Look at Sam! Sam never played Mafia before as well but why is he not wasting our time?"
-    Sam: "......"
-    * ["Casey you *****%@&%$!!!!"] -> game_never_played
-    * ["It's fine Kally, I will learn as I go"] -> game_start
-    = game_never_played
-    (You sweared Casey with all the [censored] words you have known, and Casey sweared back brutally. Kally, Sam, and the Mayor guy all had to step in and pull you two apart. You were over angry and You don't even remember how you left the place and got back home. Well, eventually you didn't get to learn how to play Mafia, but you definely learned a lot of swear words that you will add to your vocab list...)
-    -> END
+
+It's my first time playing this game, so..."
+
+Kally: "Don't worry! We all start somewhere. I'm Kally, by the way."
+
+"I'm Alex!"
+
+Kally: "Nice to meet you, Alex! Any specific questions that I can help with?"
+
+* ["Umm...yes!"] -> annoyed_Casey
+* "Thank you Kally, but I’m good!" -> game_start
+
+=== annoyed_Casey ===
+
+"So, during the night phase..."
+
+Casey: "Ughhh, can we just start already? Alex, you’ll learn as we go. No need to hold us up."
+
+Kally: "Casey! Be nice."
+
+Casey: "Come on, Sam’s new too, but he’s not making a big deal about it."
+
+Sam: "..."
+
+Kally: "Hey!"
+
+* ["Casey, you *****%@&%$!!!!"] -> game_never_played
+* "It’s fine, Kally, I’ll pick it up as I go." -> game_start
+
+=== game_never_played ===
+
+(You unleashed every insult word in your arsenal at Casey, who fired back just as viciously. The battle got so intense that Kally, Sam, and even the Mayor had to step in to physically pull you two apart. You were beyond furious —— so much so that you barely remember how you left the place or made it back home. In the end, you didn’t get to learn how to play Mafia, but you certainly expanded your vocabulary with a whole new set of creative insults...)
+-> END
+
 === game_start ===
-    (Everyone closed their eyes...)
-    Mayor: Sheriff please open your eyes. Who do you find suspcious and want to go after to investigate tonight?
-    Got it. This person is...(the Mayor gave the hand gesture). Now you can close your eyes go back to sleep.
-    Mafia, you are awake now to excecute your order now. Who will be your target tonight?
-    (You looked around to see everyone. Everyone is sitting on the same side of a long conference table, while the mayor is on the other side. Each of the players have their own name tag by their sides. From the Mayor's left to right, you see Kally, Casey, Sam, and lastly Alex which is yourself.) //insert image
-    * Point at Kally immediately -> first_night_Kally
-    * Point at Casey immediately -> first_night_Casey
-    * Point at Sam immediately -> first_night_Sam
-    * [Hold on, I need some time to think about it] -> first_night_hesitant
-    
+
+(Everyone closes their eyes...)
+
+Mayor: "Sheriff, time to act —— please open your eyes —— Who do you find suspicious? Who would you like to investigate tonight?"
+
+(Sheriff chooses.)
+
+Mayor: "This person is… (The Mayor signals with a hand gesture.) Now, you may return to sleep and close your eyes. Mafia, you are now awake —— who will be your target tonight?"
+
+(You glance at the name tags in front of each player. From left to right: Kally, Casey, Sam, and yourself, Alex.)
+
+* [Point at Kally] -> first_night_Kally
+* [Point at Casey] -> first_night_Casey
+* [Point at Sam] -> first_night_Sam
+* [Hold on, I need some time to think...] -> first_night_hesitant
+
 === first_night_hesitant ===
-    It seems like they are all in the same sitting position as when they closed their eyes. You can't find any flaw points from that to simple hack the game and tell who is the sheriff. At the same time, you don't know any of them —— even though it seems like the rest of them all know each other already —— and feel sorry for elimating any of them so early. You have been hesitanted for a moment and the Mayor's expression is reminding you that you should make the choice right now!
-    * [Point at Kally] -> first_night_Kally
-    * [Point at Casey] -> first_night_Casey
-    * [Point at Sam] -> first_night_Sam
+
+~ first_night_hesitated = true
+
+(Everyone is still sitting exactly as they were when they closed their eyes —— no visible movements, no clues to exploit. There's no easy way to hack the game and figure out who the Sheriff is. At the same time, you realize you don’t know anyone here, even though they all seem familiar with each other. The thought of eliminating someone so early makes you hesitate. But the Mayor’s expectant gaze is pressing you —— your time is up. You need to make a decision. Now.)
+
+* [Point at Kally] -> first_night_Kally
+* [Point at Casey] -> first_night_Casey
+* [Point at Sam] -> first_night_Sam
+
 
 === first_night_Kally ===
-    Mayor: Last night, Kally was murderred by the Mafia.
-    Now takes turn to speak. The person to the right of the dealth speak first. Start with Casey, Sam you will be the next.
-    Casey: Ugh why am I the first one to start. I am just a civilian. I don't have ANY information. This speaking order sucks, sorry for you guys, you won't get the chance to hear my inference, good luck now. I will say this...Alex is definetly more suspcious than Sam. (waves to indicate Sam to speak now)
-    Sam: Ummm, I am a new player, not like Casey, so sorry that I don't have much information to share either. I am also a civilian. That's all sorry.
-    (Now is your turn to speak...)
-    * "I think Sam is suspcious" -> lose
-    * "I think Casey is suspcious" -> lose
-    * "I am the sheriff" -> successful_sheriff_disguise //successful if say Casey is Mafia (because Sam is newbie and didn't realize you are hiding the possibility of Kally is the sheriff), unsuccessful if say Sam is Mafia. If say Kally is civilian and suspcious of Casey, successful. If say Kally is civilian and suspcious of Sam, and if first_night_hesititate, win (Casey thinks saying Kally is civilian adds to Alex's credits, also it feels like a newbie thing cuz the night took forever), if not first_night hesititae, loose (sam would take a longer time deciding I know her.)
+Mayor: "Last night, Kally was murdered by the Mafia, and the killer still walks among us, hidden in plain sight...
+
+Now, it’s time to speak and uncover the truth. We will go in order, starting with the person seated to the right of the fallen. Casey, you will begin. Sam, you’re up next. Choose your words wisely —— your survival may depend on it."  
+
+Casey: "Ugh, why do I have to go first? I’m just a civilian —— I don’t have ANY useful information. This speaking order is the worst! Sorry guys, but you won’t be getting any deep insights from me now. Good luck figuring things out... Alex definitely seems more suspicious than Sam though." 
+
+(Casey casually waves to signal Sam to speak.)
+
+Sam: "Umm... I’m new to this game, unlike Casey... so I don’t have much to add either. Sorry, but I’m just a civilian too. That’s all."
+
+    (Now, it’s your turn to speak...)
+    * "I think Sam is suspcious." -> Sam_suspcious
+    * "I think Casey is suspcious.["] -> Casey_suspcious
+    * ["I am the sheriff."] -> sheriff_disguise 
+    = Sam_suspcious
+    (Both Sam and Casey turn to stare at you the second you said that out. You suddenly feel the pressure)
+        * "However..." -> sheriff_disguise
+        * "Sam is suspcious because...["] -> Sam_suspcious_continue
+    = Sam_suspcious_continue
+    he..e...he didn't declare himself a civilian right away! If he were truly innocent, that should have been the first thing he said!"
+    (You shout this out before it hits you —— you never declared yourself innocent civilian first either. Brilliant. You just played yourself perfectly...)
+    ->first_day_voting
+    = Casey_suspcious
+    Because she thinks I’m suspicious! But I’m not Mafia —— why is she coming after me before I even get a chance to speak? She’s already made up her mind... she wants me gone!"
+    (You scramble for a stronger argument, something —— anything —— to shift the suspicion onto Casey. But your reasoning feels weak, unconvincing. Sam isn’t buying it, and he doesn't want to vote his friend Casey out. You’ve misplayed this badly, and you can feel the noose tightening around you...)
+    ->first_day_voting
+    = sheriff_disguise
+    (Your mind races, piecing together their interactions —— Sam and Casey clearly knew each other before the game. That bond could make them instinctively trust each other more than they trust you. One wrong move, one weak accusation, and you’ll only push them closer together. You need to be careful. You need to be convincing. Then it clicks —— Sam claimed to be new to the game. That might just be the key to turning this in your favor...)
+    "I am the sheriff, and I checked...
+        * Casey last night. Casey is the Mafia.["] -> successful_sheriff_disguise
+        * Sam last night. Sam is the Mafia." -> unsuccessful_sheriff_disguise
+    
+    = successful_sheriff_disguise
+    Trust me! I’m the only one claiming to be the sheriff. No one else has stepped forward, and I’m the last to speak. Logically, that leaves no room for doubt, I AM the sheriff."
+    (You deliberately leave out the possibility that Kally was the real Sheriff. And it works —— Sam seems convinced. After all, he’s a slow, inexperienced player, unlikely to catch the flaw in your reasoning. The perfect target for your deception.)
+    ~ deception_success = true
+    ~ attack_target = "Casey"
+    -> first_day_voting
+    
+    = unsuccessful_sheriff_disguise
+     (The moment the words leave your mouth, Casey’s eyes narrow with suspicion. Regret sinks in instantly. Of course, someone as skilled as Casey would have already considered the possibility that the eliminated Kally was the real sheriff. And now, you've only cemented her doubts about you.
+     She was suspicious of you from the start, and now there’s no turning back. No matter how much of a newbie Sam is, after you framing him of being Mafia… there’s no doubt, he’ll vote against you too.)
+    -> first_day_voting
     
 === first_night_Casey ===
-    Mayor: Last night, Casey was murderred by the Mafia.
-    //Kally checked you as Mafia
-    Sam:
-    Alex:
-    Kally:
-     * "I think Kally is suspcious" -> lose //Kally: I checked you as the Mafia. Also the sheriff must show their identity because we only have three people left and the game will end after voting. You only say I am suspcious but don't say your are the sheriff, so you logically can only be the Mafia. 
-    * "I think Sam is suspcious" -> lose //Kally: I checked you as the Mafia. Also the sheriff must show their identity because we only have three people left and the game will end after voting. You only say Casey is suspcious but don't say your are the sheriff, so you logically can only be the Mafia.
-    * "I am the sheriff" -> successful_sheriff_argue // -> successful_sheriff_argue (say Kally is the Mafia. "Casey's out? Don't worry, I will sort out the logics for you. if Kally say she is sheriff.... ) or unsuccessful_sheriff_argue (say Sam is the Mafia or say Casey is civilian, Kally: I am the real sheriff because otherwise I would't need to say this. and Sam looses trust) 
+Mayor: "Last night, Casey was murdered by the Mafia, and the killer still walks among us, hidden in plain sight...
+
+Now, it’s time to speak and uncover the truth. We will go in order, starting with the person seated to the right of the fallen. Kally, you will begin. Sam, you’re up next. Alex, you will go last. Choose your words wisely —— your survival may depend on it."
+
+Kally: "I don’t need to hesitate on this one. I am the Sheriff, and I checked Alex last night. He is the Mafia."
+
+Sam: "Oh... well, that makes sense, then."
+
+    (Now, it’s your turn to speak...)
+    * ["I think Kally is suspicious."] -> Kally_suspicious
+    * ["I think Sam is suspicious."] -> Sam_suspicious
+
+    = Kally_suspicious
+    "That’s ridiculous! Kally is just saying that because she knows there’s no way to prove it! She could be the Mafia, trying to frame me!"
+    
+    (Sam frowns. Kally stays firm, but you can see a flicker of doubt in Sam’s eyes.)
+    -> first_day_voting
+
+    = Sam_suspicious
+    "Why are you so quick to agree with Kally? You must be the Mafia and want to vote me out so badly...and wait, maybe you two are working together!"
+
+    (Oops, you got ahead of yourself and overlooked the fact that there's only one Mafia —— accusing them of working together makes no sense... )
+    -> first_day_voting
 
 === first_night_Sam ===
-    Mayor: Last night, Sam was murderred by the Mafia.
-    //Kally checked Sam as Cillvian
-    Alex, Kally, Casey
-     * "I think Kally is suspcious" -> lose 
-    * "I think Casey is suspcious" -> win //if first_night_hestitate, lose; if not, win
-    * "I am the sheriff" -> unsuccessful_sheriff_disguise // ->  Kally: I am the real sheriff because otherwise I would't need to say this. and Casey looses trust on you because of this) 
+Mayor: "Last night, Sam was murdered by the Mafia, and the killer still walks among us, hidden in plain sight...
 
+Now, it’s time to speak and uncover the truth. We will go in order, starting with the person seated to the right of the fallen. Kally, you will begin. Casey, you’re up next. Alex, you will go last. Choose your words wisely —— your survival may depend on it."
 
-=== successful_sheriff_disguise ===
-    I am the sheriff and last night I found out Casey is the Mafia. I chose her  because she is sitting next to me. You know yourself is not the sheriff, and if Casey is the sheriff, that will be the first thing she says in her statements, and she probably would emphasis ten times over and over again. I am the only one annoucing the sheriff indentity so you can trust me.
-    You porposefully didn't mention the possibility of elimiated Kally being the sheriff.
-    Sam seems convinced.
-    ->first_day_voting
+Kally: "I checked Sam last night. He was a civilian. That means the Mafia is still among us."
+
+Casey: "Well, we know Sam was innocent now, but that doesn’t really help us much... but between me and Alex, I know I’m not Mafia. That leaves only one answer."
+
+    (Now, it’s your turn to speak...)
+    * ["I think Kally is suspicious."] -> Kally_suspicious
+    * ["I think Casey is suspicious."] -> Casey_suspicious
+
+    = Kally_suspicious
+    "That’s ridiculous! Kally is just saying that because she knows there’s no way to prove it! She could be the Mafia, trying to frame me!"
     
-=== unsuccessful_frame ===
-    No one seems convinced, including yourself.
-    ->first_day_voting
+    (Sam frowns. Kally stays firm, but you can see a flicker of doubt in Sam’s eyes.)
+    -> first_day_voting
+
+    = Casey_suspicious
+    "Why are you so quick to agree with Kally? You must be the Mafia and want to vote me out so badly...and wait, maybe you two are working together!"
+
+    (Oops, you got ahead of yourself and overlooked the fact that there's only one Mafia —— accusing them of working together makes no sense... )
+    -> first_day_voting
 
 === first_day_voting ===
-Mayor: Time to vote for execution.
-    * Vote for Casey -> trust_check
-    * Vote for Sam -> trust_check
-= trust_check
-//unsuccessful_frame
-->mafia_exposed
-// successful_sheriff_disguise
-->win_through_voting
 
+Mayor: "No more delays. Cast your votes —— who among us shall face judgment?"
 
-=== mafia_exposed ===
-You exposed your identity as the Mafia and got voted out for excecution...
+* {first_night_Kally or first_night_Sam} [Vote for Casey] 
+    ~ vote_target = "Casey"
+    -> trust_check
+* {first_night_Kally or first_night_Casey} [Vote for Sam] 
+    ~ vote_target = "Sam"
+    -> trust_check
+* {first_night_Casey or first_night_Sam} [Vote for Kally]  
+    ~ vote_target = "Kally"
+    -> trust_check
+
+=== trust_check ===
+{deception_success == false: -> lose}
+{deception_success == true: 
+    -> check_target
+    }
+
+= check_target
+{vote_target == attack_target: -> win_at_voting}
+-> win_at_night
+
+=== lose ===
+
+(You failed to escape their suspicion. Their eyes, once uncertain, now burn with conviction. You’ve been caught and voted out.)
+
 YOU LOST THE GAME.
-->END
 
-=== win_through_voting ===
-You know that it was an innocent person got voted out and you know that you were not innocent in this —— give them a little push, they fall apart —— you put the last surivior to the long lasting sleep at night. Poor guy.
-    YOU WIN THE GAME.
-->END
-//wait a longer time
-//hear noises
-//who is the real sheriff
+-> END
+
+=== win_at_voting ===
+
+(An innocent has fallen to the vote. Under the cover of night, you strike the final blow. With no one left to oppose you, the Mafia now seize control.)
+
+YOU WIN THE GAME.
+
+-> END
+
+=== win_at_night ===
+
+(The vote ends in a deadlock —— one vote each. But it doesn’t matter. When night falls, you’ll have the final say. Even with one innocent left standing after the runrise, they are meant to be doomed —— gripped by fear by day, powerless by night. The day ends with an inevitable voting draw, yet they won’t survive to see another dawn.)
+
+YOU WIN THE GAME.
+
+-> END
