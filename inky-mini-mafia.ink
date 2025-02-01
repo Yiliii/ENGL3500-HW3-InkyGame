@@ -112,7 +112,7 @@ Sam: "Umm... I’m new to this game, unlike Casey... so I don’t have much to a
     (Now, it’s your turn to speak...)
     * "I think Sam is suspcious." -> Sam_suspcious
     * "I think Casey is suspcious.["] -> Casey_suspcious
-    * ["I am the sheriff."] -> sheriff_disguise 
+    * ["I am the Sheriff."] -> sheriff_disguise 
     = Sam_suspcious
     (Both Sam and Casey turn to stare at you the second you said that out. You suddenly feel the pressure)
         * "However..." -> sheriff_disguise
@@ -150,16 +150,17 @@ Now, it’s time to speak and uncover the truth. We will go in order, starting w
 
 Kally: "I don’t need to hesitate on this one. I am the Sheriff, and I checked Alex last night. He is the Mafia."
 
-Sam: "Oh... well, that makes sense, then."
+Sam: "Oh... okay, that makes sense, then... I will vote Alex"
 
     (Now, it’s your turn to speak...)
     * ["I think Kally is suspicious."] -> Kally_suspicious
     * ["I think Sam is suspicious."] -> Sam_suspicious
+    * ["I am the Sheriff."] -> sheriff_disguise 
 
     = Kally_suspicious
-    "That’s ridiculous! Kally is just saying that because she knows there’s no way to prove it! She could be the Mafia, trying to frame me!"
+    "That’s ridiculous! She could be the Mafia, trying to frame me!"
     
-    (Sam frowns. Kally stays firm, but you can see a flicker of doubt in Sam’s eyes.)
+    (Sam shoots you a suspicious look. Oh no, you should have said you were the sheriff to sound more convincing.)
     -> first_day_voting
 
     = Sam_suspicious
@@ -167,32 +168,47 @@ Sam: "Oh... well, that makes sense, then."
 
     (Oops, you got ahead of yourself and overlooked the fact that there's only one Mafia —— accusing them of working together makes no sense... )
     -> first_day_voting
+    
+    = sheriff_disguise
+     (You then explain to Sam why Kally accusing you first doesn’t necessarily mean she’s 100% the Sheriff —— she could literally just be the Mafia taking a chance to frame someone and happened to get lucky. You are trying your best to persuade Sam that you’re the real Sheriff, but it’s clear he has already made up his mind in favor of Kally.
+     Well, if nothing else, you have already made up your mind as well —— you will never play this game with a group of people who all know each other except for you anymore! They’re always going to trust each other over you!)
+    -> first_day_voting
 
 === first_night_Sam ===
 Mayor: "Last night, Sam was murdered by the Mafia, and the killer still walks among us, hidden in plain sight...
 
-Now, it’s time to speak and uncover the truth. We will go in order, starting with the person seated to the right of the fallen. Kally, you will begin. Casey, you’re up next. Alex, you will go last. Choose your words wisely —— your survival may depend on it."
+Now, it’s time to speak and uncover the truth. We will go in order, Kally, you will begin. Casey, you’re up next. Alex, you will go last. Choose your words wisely —— your survival may depend on it."
 
-Kally: "I checked Sam last night. He was a civilian. That means the Mafia is still among us."
+Kally: "I checked Sam last night. He was a civilian. That means the Mafia is still among us. Sorry that I can’t be of much help since I’m the first to speak. I will vote for the person I most suspect to be Mafia based on what each of you say."
 
-Casey: "Well, we know Sam was innocent now, but that doesn’t really help us much... but between me and Alex, I know I’m not Mafia. That leaves only one answer."
+{first_night_hesitated == true: Kally continues: "As the Sheriff, I feel it’s important to point out that last night’s Mafia phase lasted unusually long...." (Kally doesn’t say it outright, but you can tell she’s implying that she finds you relatively more suspicious. Casey isn’t the type of player who would hesitate when making a decision like that.)}
+
+Casey: "Well, your investigation choice is basically useless LOL we know Sam was innocent already by his death last night... but between me and Alex, I know I’m not Mafia. That leaves only one answer."
+
+{first_night_hesitated == true: Casey continues: "Not to mention, the Mafia’s night phase took way too long for my liking. Come on, do you really think I’d take that long just to end up killing a civilian?" (Kally seems annoyed by Casey's tone but agrees with her reasoning.)}
 
     (Now, it’s your turn to speak...)
     * ["I think Kally is suspicious."] -> Kally_suspicious
     * ["I think Casey is suspicious."] -> Casey_suspicious
+    * "I am the Sheriff." -> sheriff_disguise 
 
     = Kally_suspicious
-    "That’s ridiculous! Kally is just saying that because she knows there’s no way to prove it! She could be the Mafia, trying to frame me!"
+    "Kally is just saying she is the sheriff but she can't be it!"
     
-    (Sam frowns. Kally stays firm, but you can see a flicker of doubt in Sam’s eyes.)
+    (Casey frowns. If none of you are the real Sheriff, then the elimiated Sam must be. However, if Kally is not the real Sheriff, why would she claim that she is? To get the first move in case a real Sheriff checked her last night? Maybe, but that wouldn't explain why she announced Sam's identity instead of taking a gamble to accuse someone else. There’s no benefit for Kally to declare herself the Sheriff unless she truly is. You are certain that after you framed her as Mafia… there’s no doubt, Kally will vote against you too.)
     -> first_day_voting
 
     = Casey_suspicious
-    "Why are you so quick to agree with Kally? You must be the Mafia and want to vote me out so badly...and wait, maybe you two are working together!"
-
-    (Oops, you got ahead of yourself and overlooked the fact that there's only one Mafia —— accusing them of working together makes no sense... )
+    {first_night_hesitated == true: "Casey you must be the Mafia and want to vote me out so badly!" (You start to panic under the pressure as both Kally and Casey express their suspicion of you. Blurting out your accusation, your voice lacks conviction. You try to explain yourself with more persuasive words, but your thoughts are scattered. You can't speak coherently anymore.) -> first_day_voting}
+    "I believe Kally is the real Sheriff. I’m just a civilian; Casey never claimed to be the Sheriff, so she couldn’t be one; While Sam could technically be the Sheriff, I still think Kally is the more likely choice. If Kally were the Mafia, she could have easily framed someone else instead of saying Sam is civilian. As the first to speak, it would have been more beneficial for her to take the initiative in case a real Sheriff checked her last night and exposed her as Mafia, as she would have been powerless to defend herself if that happened. Once again, I am a civilian. I trust Kally, and I will vote for Casey."
+        (Your reasoning is clear and composed. Kally nods along as you speak, showing her agreement.)
+    ~ deception_success = true
+    ~ attack_target = "Casey"
     -> first_day_voting
 
+    = sheriff_disguise
+     (The moment the words leave your mouth, Casey’s eyes narrow with suspicion. Regret sinks in instantly. Of course, someone as skilled as Casey would be suspicious of you when you declare yourself to be the Sheriff after Kally has already done so. If you are the real Sheriff, why would Kally, the first person to speak, claim that she is the Sheriff? To get the first move in case a real Sheriff checked her last night? Maybe, but that wouldn't explain why she announced Sam's identity instead of taking a gamble to accuse someone else. There’s no benefit for Kally to declare herself the Sheriff unless she truly is. You are certain that after you framed her as Mafia… there’s no doubt, Kally will vote against you too.)
+    -> first_day_voting
 === first_day_voting ===
 
 Mayor: "No more delays. Cast your votes —— who among us shall face judgment?"
